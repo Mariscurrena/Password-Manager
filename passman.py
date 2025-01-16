@@ -9,6 +9,10 @@ import os
 
 pwd_manager = {} ## Empty dictionary to manage all the credentials
 
+def wait(duration):
+    time.sleep(duration)
+    os.system('clear')
+    
 def create_user():
     username = input("Please provide your desired username: ")
     #password = input("Please provide your desired password: ")
@@ -20,17 +24,22 @@ def create_user():
         print("Congrats! Your account was created successfully!!")
     else:
         print("Sorry! Your password doesn't match :c\n Try again!")
-        time.sleep(1)
-        os.system('clear')
+        
 
 def login_user():
     username = input("Please enter your username: ")
-    password = input("Please enter your password: ")
+    password = pwd.getpass("Please enter your password: ")
     hash_pass = hash.sha256(password.encode()).hexdigest() #Hashed the password in order to be able to compare it with the values in the dictionary and validate if the password is correct
     if username in pwd_manager.keys() and hash_pass == pwd_manager[username]:
-        print(f"Welcome back {username}!! It is nice to see you again c:")
+        print(f"\nWelcome back {username}!! It is nice to see you again c:")
+        opt = input(f"\nWhat do you want to do {username}\n 1. Continue exploring\n 2. Logout\n")
+        if opt == '2':
+            print(f"\nSee you soon, {username} c:")
+            wait(1)
+            exit()
     else:
-        print("Sorry! Your credentials are incorrect!")
+        print("Sorry! Your credentials are incorrect! \n Try again c:")
+        wait(1)
 
 def main():
     os.system('clear')
@@ -39,15 +48,14 @@ def main():
         print("\nPlease select one of the following options: \n 1. Create an Account \n 2. Login into your account \n 3. Exit")
         opt = input("Option: ")
         if opt == "1":
-            print("You selected the create account feature!")
+            print("\nYou selected the create account feature!\n")
             create_user()
         elif opt == "2":
-            print("You selected the login account feature!")
+            print("\nYou selected the login account feature!\n")
             login_user()
         elif opt == "3":
-            print("Bye c:")
-            time.sleep(2)
-            os.system('clear')
+            print("\nBye c:")
+            wait(1)
             exit()
         else:
             print("Invalid choice!")
