@@ -11,10 +11,17 @@ pwd_manager = {} ## Empty dictionary to manage all the credentials
 
 def create_user():
     username = input("Please provide your desired username: ")
-    password = input("Please provide your desired password: ")
-    hash_pass = hash.sha256(password.encode()).hexdigest() #Recive the password, encode the password, made a hash sha256 for the password and return the value on an hexadecimal array
-    pwd_manager[username] = hash_pass #Stores the hashed password with the correct user.
-    print("Congrats! Your account was created successfully!!")
+    #password = input("Please provide your desired password: ")
+    password = pwd.getpass("Please provide your desired password: ")
+    password_validation = pwd.getpass("Please provide your desired password again: ")
+    if password == password_validation:
+        hash_pass = hash.sha256(password.encode()).hexdigest() #Recive the password, encode the password, made a hash sha256 for the password and return the value on an hexadecimal array
+        pwd_manager[username] = hash_pass #Stores the hashed password with the correct user.
+        print("Congrats! Your account was created successfully!!")
+    else:
+        print("Sorry! Your password doesn't match :c\n Try again!")
+        time.sleep(1)
+        os.system('clear')
 
 def login_user():
     username = input("Please enter your username: ")
@@ -40,6 +47,7 @@ def main():
         elif opt == "3":
             print("Bye c:")
             time.sleep(2)
+            os.system('clear')
             exit()
         else:
             print("Invalid choice!")
